@@ -67,7 +67,8 @@
                                     {{ article.created_at }}
                                 </div>
                                 <div class="col-md-6 actions1">
-                                    <form method="post">
+                                    <form action="{% url 'deleteArticle' article.id %}" method="GET">
+                                        {% csrf_token %}
                                         <button class="btn btn-danger">Eliminar</button>
                                     </form>
                                     <form action="" method="get">

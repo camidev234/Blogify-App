@@ -66,6 +66,15 @@ def saveArticle(request):
         
         return redirect('indexUser')
     
+   
+def deleteArticle(request, article_id):
+    article = Article.objects.get(id=article_id)
+    
+    if request.method == 'GET':
+        article.delete()
+        return redirect('allUserArticles')
+
+    
 def userCategories(request):
     user = request.user
     
@@ -113,5 +122,24 @@ def filterByCategory(request):
         'cont': cont
     })
 
+
+def createResponseForm(request, article_id):
+    article = Article.objects.get(id=article_id)
+    
+    return render(request, 'createResponse.html', {
+        'article': article
+    })
+
+def createResponse(request, article_id):
+    if request.method == 'POST':
+        UserResponse.objects.create(
+            user_id = request.user.id,
+            article_id = article_id,    
+            response = request.POST['response']
+        )
+    
+        return redirect('indexUser')
+    else:
+        return redirect('indexUser')
 
     

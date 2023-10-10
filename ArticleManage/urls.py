@@ -7,8 +7,12 @@ urlpatterns = [
     path('userArticles/', v.showUserArticles, name='allUserArticles'),
     path('createArticle/', v.createArticle, name='createArticle'),
     path('saveArticle/', v.saveArticle, name='saveArticle'),
+    path('deleteArticle/<int:article_id>/', v.deleteArticle, name='deleteArticle'),
     path('userCategories/', v.userCategories, name='userCategories'),
     path('createCategorie/', v.createCategorie, name='createCategorie'),
     path('saveCategorie/', v.saveCategorie, name='saveCategorie'),
     path('userArticlesFl/', v.filterByCategory, name='filterByCategory'),
+    path('createResponse/<int:article_id>/', v.createResponseForm, name='createResponse'),
+    path('saveResponse/<int:article_id>', v.createResponse, name='saveResponse'),
+    
 ]
