@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class Categorie(models.Model):
     categorie = models.CharField(max_length=50)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Article(models.Model):
     categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE)

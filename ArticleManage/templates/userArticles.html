@@ -3,17 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Agrega la referencia al archivo CSS de Bootstrap si aún no lo has hecho -->
+    <!-- <link rel="stylesheet" href="ruta/a/bootstrap.css"> -->
+    <title>Tus Artículos</title>
+    <style>
+        /* Estilo personalizado para ajustar el espacio entre las tarjetas */
+        .card {
+            margin-bottom: 20px;
+        }
+
+        /* Ajusta el espacio entre las acciones */
+        .card-footer .actions {
+            margin-top: 10px;
+        }
+
+        .actions1 {
+            display: flex;
+            gap: 20px;
+        }
+    </style>
 </head>
 <body>
     {% include 'components/header.html' %}
 
-    {% for article in userArticles %}
-    <span>{{ article.title }}</span>
-    {% endfor %}
-
-    <div class="createArticle">
-        <a href="{% url 'createArticle' %}">Create new article</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <section class="articles">
+                    {% for article in userArticles %}
+                    <div class="card">
+                        <div class="card-header">
+                            {{ article.user.username }} | {{ article.categorie.categorie }}
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-title">{{ article.title }}</h6>
+                            <p class="card-text">{{ article.description }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ article.created_at }}
+                                </div>
+                                <div class="col-md-6 actions1">
+                                    <form method="post">
+                                        <button class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                    <form action="" method="get">
+                                        <button class="btn btn-primary">Actualizar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </section>
+            </div>
+            <div class="col-md-4">
+                <section class="actions">
+                    <div class="filter">
+                        <form action="{% url 'filterByCategory' %}" method="POST">
+                            {% csrf_token %}
+                            <label for="categorieFilter">Categoría:</label>
+                            <select name="categorieFilter" id="categorieFilter" class="form-control">
+                                <option value="All">Todas</option>
+                                {% for categorie in userCategories %}
+                                <option value="{{ categorie.id }}">{{ categorie.categorie }}</option>
+                                {% endfor %}
+                            </select>
+                            <button class="btn btn-primary"><i class="bi bi-filter"></i> Filtrar</button>
+                        </form>
+                    </div>
+                    <div class="createArticle">
+                        <a href="{% url 'createArticle' %}" class="btn btn-success">Crear nuevo artículo</a>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
 </body>
 </html>

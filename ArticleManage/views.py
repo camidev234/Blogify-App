@@ -6,10 +6,6 @@ from django.views.decorators.cache import never_cache
 # Create your views here.
 
 
-import random as r
-from django.shortcuts import render
-from .models import Article
-
 def indexUser(request):
     articles = list(Article.objects.all())
     n = len(articles)
@@ -35,8 +31,8 @@ def indexUser(request):
 @never_cache
 def showUserArticles(request):
     user = request.user
-    userArticles = Article.objects.filter(user_id=user.id)
-    
+    userArticles = Article.objects.filter(user=user.id)
+    userCategories = Categorie.objects.filter(user_id=user.id)
     articles = []
     
     for article in userArticles:
@@ -44,7 +40,8 @@ def showUserArticles(request):
     
     return render(request, 'userArticles.html', {
         'userArticles': userArticles,
-        'user': user
+        'user': user,
+        'userCategories': userCategories 
     })
     
 def createArticle(request):
@@ -66,6 +63,47 @@ def saveArticle(request):
         )
         
         return redirect('indexUser')
+    
+def userCategories(request):
+    user = request.user
+    
+    userCategories = Categorie.objects.filter(user_id=user.id)
+    
+    return render(request, 'userCategories.html', {
+        'userCategories': userCategories
+    })    
+
+def createCategorie(request):
+    user = request.user
+    return render(request, 'createCategorie.html', {
+        'user': user
+    })
+    
+def saveCategorie(request):
+    user = request.user
+    if request.method == 'POST':
+        Categorie.objects.create(
+            user_id = user.id,
+            categorie = request.POST['categorie']
+        )
+        
+        return redirect('userCategories')
+    else:
+        return redirect('createCategorie')
+    
+def filterByCategory(request):
+    categorie = request.POST['categorieFilter']
+    
+    if categorie == 'All':
+        return redirect('allUserArticles')
+    
+    articlesByCategorie = Article.objects.filter(categorie_id=categorie)
+    categories = Categorie.objects.all()
+    
+    return render(request, 'userArticles.html', {
+        'userArticles': articlesByCategorie,
+        'userCategories': categories
+    })
 
 
     
