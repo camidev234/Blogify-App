@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'components/header.html' %}
+
+    {% for article in userArticles %}
+    <span>{{ article.title }}</span>
+    {% endfor %}
+
+    <div class="createArticle">
+        <a href="{% url 'createArticle' %}">Create new article</a>
+    </div>
+</body>
+</html>
