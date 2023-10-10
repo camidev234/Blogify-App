@@ -40,6 +40,8 @@
             text-align: left;
         }
         
+    
+
     </style>
 </head>
 <body>
@@ -53,7 +55,7 @@
                     <h2>{{ message }}</h2>
                     {% else %}
                     {% for article in choiceArticles %}
-                    <div class="card mb-4 custom-card"> <!-- Tarjetas con ancho máximo mayor -->
+                    <div class="card mb-4 custom-card">
                         <div class="card-header card-header-custom">
                             <h6>{{ article.user.username }}</h6>
                             <span>{{ article.categorie.categorie }}</span>
@@ -62,9 +64,12 @@
                             <h6 class="card-title">{{ article.title }}</h6>
                             <p class="card-text">{{ article.description }}</p>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer d-flex justify-content-between">
                             <form method="get">
                                 <button class="btn btn-primary">View Responses</button>
+                            </form>
+                            <form method="get">
+                                <button class="btn btn-success">Comment</button>
                             </form>
                         </div>
                     </div>
@@ -72,7 +77,8 @@
                     {% endif %}
                 </section>
             </div>
-            <div class="col-md-3 mt-4 custom-mt order-1 order-md-2">
+
+            <div class="col-md-3 mt-4 custom-mt order-1 order-md-2" id="side">
                 <section class="sidebar">
                     <div class="articles mb-3">
                         <a href="{% url 'allUserArticles' %}" class="btn btn-primary btn-block dark-link">My publications</a>

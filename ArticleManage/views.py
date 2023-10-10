@@ -34,14 +34,16 @@ def showUserArticles(request):
     userArticles = Article.objects.filter(user=user.id)
     userCategories = Categorie.objects.filter(user_id=user.id)
     articles = []
-    
     for article in userArticles:
         articles.append(article)
+    
+    cont = len(userArticles)
     
     return render(request, 'userArticles.html', {
         'userArticles': userArticles,
         'user': user,
-        'userCategories': userCategories 
+        'userCategories': userCategories,
+        'cont': cont
     })
     
 def createArticle(request):
@@ -93,16 +95,22 @@ def saveCategorie(request):
     
 def filterByCategory(request):
     categorie = request.POST['categorieFilter']
-    
+    articles = []
     if categorie == 'All':
         return redirect('allUserArticles')
     
     articlesByCategorie = Article.objects.filter(categorie_id=categorie)
+    for article in articlesByCategorie:
+        articles.append(article)
+        
+    cont = len(articles)
+    
     categories = Categorie.objects.all()
     
     return render(request, 'userArticles.html', {
         'userArticles': articlesByCategorie,
-        'userCategories': categories
+        'userCategories': categories,
+        'cont': cont
     })
 
 

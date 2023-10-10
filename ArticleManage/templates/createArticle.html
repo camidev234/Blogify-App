@@ -3,21 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Crear Artículo</title>
+    <!-- Agrega la referencia al archivo CSS de Bootstrap si aún no lo has hecho -->
+    <!-- <link rel="stylesheet" href="ruta/a/bootstrap.css"> -->
 </head>
 <body>
-    <form action="{% url 'saveArticle' %}" method="POST">
-        {% csrf_token %}
-        <label for="">Categorie:</label><br>
-        <select name="categorie" id="">
-            {% for categorie in categories %}
-            <option value="{{ categorie.id }}">{{ categorie.categorie }}</option>
-            {% endfor %}
-        </select><br>
-        <label for="">Title:</label>
-        <input type="text" name="title" placeholder="title here"><br>
-        <input type="text" name="description" placeholder="description here"><br>
-        <input type="submit" value="Create article">
-    </form>
+    {% include 'components/header.html' %}
+    <div class="container mt-4">
+        <form action="{% url 'saveArticle' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="categorie">Categoría:</label>
+                <select class="form-control" name="categorie" id="categorie">
+                    {% for categorie in categories %}
+                    <option value="{{ categorie.id }}">{{ categorie.categorie }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="title">Título:</label>
+                <input class="form-control" type="text" name="title" id="title" placeholder="Ingresa el título aquí">
+            </div>
+            <div class="form-group">
+                <label for="description">Descripción:</label>
+                <textarea class="form-control form-control-lg" type="text" name="description" id="description" placeholder="Ingresa la descripción aquí"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Crear artículo</button>
+        </form>
+    </div>
 </body>
+</html>
+</html>
 </html>

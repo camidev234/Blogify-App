@@ -9,28 +9,49 @@
     <title>Tus Artículos</title>
     <style>
         /* Estilo personalizado para ajustar el espacio entre las tarjetas */
-        .card {
-            margin-bottom: 20px;
-        }
+    /* Estilo personalizado para ajustar el espacio entre las tarjetas */
+    .card {
+        margin-bottom: 20px;
+    }
 
-        /* Ajusta el espacio entre las acciones */
-        .card-footer .actions {
-            margin-top: 10px;
-        }
+    /* Ajusta el espacio entre las acciones */
+    .card-footer .actions {
+        margin-top: 10px;
+    }
 
-        .actions1 {
-            display: flex;
-            gap: 20px;
-        }
+    .actions1 {
+        display: flex;
+        gap: 20px;
+    }
+
+    /* Agrega margen superior al contenido */
+    .container {
+        margin-top: 50px;
+    }
+
+    .createArticle {
+        margin-top: 50px;
+    }
+
+    .fil {
+        margin-top: 30px;
+    }
+</style>
+
     </style>
 </head>
 <body>
     {% include 'components/header.html' %}
 
+    
+
     <div class="container">
         <div class="row">
             <div class="col-md-8">
                 <section class="articles">
+                    <div class="cont">
+                        <h2>Mostrando {{ cont }} Articulos</h2>
+                    </div>
                     {% for article in userArticles %}
                     <div class="card">
                         <div class="card-header">
@@ -52,6 +73,9 @@
                                     <form action="" method="get">
                                         <button class="btn btn-primary">Actualizar</button>
                                     </form>
+                                    <form action="" method="get">
+                                        <button class="btn btn-success">Respuestas</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +95,7 @@
                                 <option value="{{ categorie.id }}">{{ categorie.categorie }}</option>
                                 {% endfor %}
                             </select>
-                            <button class="btn btn-primary"><i class="bi bi-filter"></i> Filtrar</button>
+                            <button class="btn btn-primary fil"><i class="bi bi-filter"></i> Filtrar</button>
                         </form>
                     </div>
                     <div class="createArticle">

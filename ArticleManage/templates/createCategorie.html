@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Crear Categoría</title>
+    <!-- Agrega la referencia al archivo CSS de Bootstrap si aún no lo has hecho -->
+    <!-- <link rel="stylesheet" href="ruta/a/bootstrap.css"> -->
 </head>
 <body>
-    <form action="{% url 'saveCategorie' %}" method="POST">
-        {% csrf_token %}
-        <label for="">Categorie:</label><br>
-        <input type="text" placeholder="Categorie here" name="categorie"><br>
-        <input type="submit" value="Create categorie">
-    </form>
+    {% include 'components/header.html' %}
+    <div class="container mt-4">
+        <form action="{% url 'saveCategorie' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="categorie">Categoría:</label>
+                <input class="form-control" type="text" placeholder="Categoría aquí" name="categorie" id="categorie">
+            </div>
+            <button type="submit" class="btn btn-primary">Crear categoría</button>
+        </form>
+    </div>
 </body>
 </html>
