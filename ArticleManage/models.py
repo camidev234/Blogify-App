@@ -19,3 +19,21 @@ class UserResponse(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     response = models.CharField(max_length=700)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name='liked_responses', through='Like')
+    dislikes = models.ManyToManyField(User, related_name='disliked_responses', through='Dislike')
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    response = models.ForeignKey(UserResponse, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'response')
+        
+class Dislike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    response = models.ForeignKey(UserResponse, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'response')

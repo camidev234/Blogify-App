@@ -63,11 +63,11 @@
                             <p class="card-text">{{ article.description }}</p>
                         </div>
                         <div class="card-footer d-flex justify-content-between">
-                            <form method="get">
-                                <button class="btn btn-primary">View Responses</button>
+                            <form action="{% url 'listResponses' article.id %}" method="get">
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#responseModal{{ article.id }}">View Responses</button>
                             </form>
-                            <form action="{% url 'createResponse' article.id %}"  method="get" class="comment-form">
-                                <button class="btn btn-success btn-comment data-toggle" modal" data-target="#commentModal">Comment</button>
+                            <form action="{% url 'createResponse' article.id %}" method="get" class="comment-form">
+                                <button class="btn btn-success btn-comment" data-toggle="modal" data-target="#commentModal{{ article.id }}">Comment</button>
                             </form>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                     </div>
                     <div class="responses mb-3">
                         <span class="dark-link">My total responses: </span>
-                        <a href="#" class="btn btn-primary btn-block dark-link">View My Responses</a>
+                        <a href="#" class="btn btn-primary btn-block dark-link btn-comments">View My Responses</a>
                     </div>
                     <div class="userCategories">
                         <span class="dark-link">My categories</span>
@@ -96,7 +96,39 @@
         </div>
     </div>
 
+    <!-- Ventana modal para ver respuestas -->
+
+    <div class="modal fade" id="responseModal{{ article.id }}" tabindex="-1" role="dialog" aria-labelledby="responseModalLabel{{ article.id }}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="responseModalLabel{{ article.id }}">View Responses</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido de respuestas -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Agregar un evento click al botón "Comment" para mostrar la modal
+        $(document).on('click', '.btn-comment', function() {
+            const articleId = $(this).data('article-id');
+            $('#commentModal' + articleId).modal('show');
+        });
+    </script>
 </body>
+</html>
+
 </html>

@@ -141,5 +141,46 @@ def createResponse(request, article_id):
         return redirect('indexUser')
     else:
         return redirect('indexUser')
+    
+def listResponses(request, article_id):
+    articleResponses = UserResponse.objects.filter(article=article_id)
+    article = Article.objects.get(id=article_id)
+    cont = len(articleResponses)
+    return render(request, 'articleResponses.html', {
+        'articleResponses': articleResponses,
+        'article': article,
+        'cont': cont
+    })
+    
+
+def addLike(request, id, art_id):
+    if request.method == 'GET':
+        user = request.user  # Obtén al usuario actual que dio like
+        article_response = UserResponse.objects.get(id=id)
+
+        # Comprueba si el usuario ya ha dado like a esta respuesta
+        if article_response.likes.filter(id=user.id).exists():
+            # Si el usuario ya dio like, quítalo
+            article_response.likes.remove(user)
+        else:
+            # Si el usuario no ha dado like, agrégalo
+            article_response.likes.add(user)
+
+        return redirect('listResponses', article_id=art_id)
+    
+def addDisLike(request, id, art_id):
+    if request.method == 'GET':
+        user = request.user 
+        article_response = UserResponse.objects.get(id=id)
+
+        # Comprueba si el usuario ya ha dado like a esta respuesta
+        if article_response.dislikes.filter(id=user.id).exists():
+            article_response.dislikes.remove(user)
+        else:
+            article_response.dislikes.add(user)
+
+        return redirect('listResponses', article_id=art_id)
+
+
 
     
